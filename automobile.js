@@ -17,6 +17,11 @@ var automobiles = [
 /*This function sorts arrays using an arbitrary comparator. You pass it a comparator and an array of objects appropriate for that comparator and it will return a new array which is sorted with the largest object in index 0 and the smallest in the last index*/
 function sortArr( comparator, array ){
     /*your code here*/
+
+    return array.sort(comparator);
+
+
+    
 }
 
 /*A comparator takes two arguments and uses some algorithm to compare them. If the first argument is larger or greater than the 2nd it returns true, otherwise it returns false. Here is an example that works on integers*/
@@ -33,16 +38,43 @@ function exComparator( int1, int2){
 /*This compares two automobiles based on their year. Newer cars are "greater" than older cars.*/
 function yearComparator( auto1, auto2){
     /* your code here*/
+    return (auto1.year > auto2.year);
 }
 
 /*This compares two automobiles based on their make. It should be case insensitive and makes which are alphabetically earlier in the alphabet are "greater" than ones that come later.*/
 function makeComparator( auto1, auto2){
     /* your code here*/
+
+    // Return result of string comparison (after converting to lower case)
+    // Note: string comparison of "a" > "b" returns false. Thus we need to use '<' to invert evaluation result
+    return (auto1.make.toLowerCase() < auto2.make.toLowerCase());
 }
 
 /*This compares two automobiles based on their type. The ordering from "greatest" to "least" is as follows: roadster, pickup, suv, wagon, (types not otherwise listed). It should be case insensitive. If two cars are of equal type then the newest one by model year should be considered "greater".*/
 function typeComparator( auto1, auto2){
     /* your code here*/
+    
+    // create function to convert type to value
+    function typeVal(auto){
+        if (auto.type.toLowerCase() == "roadster"){
+            return 4;
+        }
+        else if (auto.type.toLowerCase() == "pickup"){
+            return 3;
+        }
+        else if (auto.type.toLowerCase() == "suv"){
+            return 2;
+        }
+        else if (auto.type.toLowerCase() == "wagon"){
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    
+    // Return the comparison result
+    return typeVal(auto1) >= typeVal(auto2);
 }
 
 /*Your program should output the following to the console.log, including the opening and closing 5 stars. All values in parenthesis should be replaced with appropriate values. Each line is a seperate call to console.log.
@@ -68,3 +100,29 @@ The cars sorted by type are:
 
 As an example of the content in the parenthesis:
 1990 Ford F-150 */
+
+
+
+// Test for Type Comparison
+//console.log(typeComparator(automobiles[5], automobiles[4]));
+
+
+// test alphabetic comparison
+/*
+console.log(makeComparator(automobiles[0],automobiles[1])); // should return f
+console.log(makeComparator(automobiles[1],automobiles[2])); // should return t
+console.log(makeComparator(automobiles[2],automobiles[3])); // should return t
+console.log(makeComparator(automobiles[3],automobiles[4])); // should return f
+console.log(makeComparator(automobiles[4],automobiles[5])); // should return t
+console.log(makeComparator(automobiles[5],automobiles[0])); // should return f*/
+
+
+// test sorting
+function printAuto(auto){
+    console.log(auto.year + " " + auto.make + " " + auto.model);
+}
+
+
+automobiles.map(printAuto);
+console.log('\n');
+sortArr(yearComparator, automobiles).map(printAuto);
