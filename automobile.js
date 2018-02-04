@@ -6,16 +6,6 @@ function Automobile( year, make, model, type ){
 
 }
 
-// logMe function added to Automobile prototype
-Automobile.prototype.logMe = function(logType){
-    if (logType) {
-        console.log(this.year + " " + this.make + " " + this.model + " " + this.type);
-    }
-    else {
-        console.log(this.year + " " + this.make + " " + this.model);
-    }
-}
-
 var automobiles = [ 
     new Automobile(1995, "Honda", "Accord", "Sedan"),
     new Automobile(1990, "Ford", "F-150", "Pickup"),
@@ -84,7 +74,7 @@ function makeComparator( auto1, auto2){
 }
 
 /*This compares two automobiles based on their type. The ordering from "greatest" to "least" is as follows: roadster, pickup, suv, wagon, (types not otherwise listed). It should be case insensitive. If two cars are of equal type then the newest one by model year should be considered "greater".*/
-function typeComparator( auto1, auto2){
+function typeComparator(auto1, auto2){
     /* your code here*/
     
     // create function to convert type to value
@@ -135,50 +125,35 @@ As an example of the content in the parenthesis:
 1990 Ford F-150 */
 
 
-
-// Test for Type Comparison
-//console.log(typeComparator(automobiles[5], automobiles[4]));
-
-
-// test alphabetic comparison
-/*
-console.log(makeComparator(automobiles[0],automobiles[1])); // should return f
-console.log(makeComparator(automobiles[1],automobiles[2])); // should return t
-console.log(makeComparator(automobiles[2],automobiles[3])); // should return t
-console.log(makeComparator(automobiles[3],automobiles[4])); // should return f
-console.log(makeComparator(automobiles[4],automobiles[5])); // should return t
-console.log(makeComparator(automobiles[5],automobiles[0])); // should return f*/
-
-
-// test printing
-function printAuto(auto){
-    console.log(auto.year + " " + auto.make + " " + auto.model);
-}
-
-
-function printAuto2(includeType){
-    return function(a){
-        a.logMe(includeType)
+// logMe function added to Automobile prototype
+Automobile.prototype.logMe = function(logType){
+    if (logType) {
+        console.log(this.year + " " + this.make + " " + this.model + " " + this.type);
+    }
+    else {
+        console.log(this.year + " " + this.make + " " + this.model);
     }
 }
 
 
+// printAuto
+// This function produces a function that is compatible with the array forEach method
+// and adapts for whether to call logMe with or without the Type displayed
+// Note: I couldn't find a better way to call the method of each object in the array using higher order functions
+function logAuto(includeType){
+    return function(auto){
+        auto.logMe(includeType)
+    }
+}
 
-
-automobiles.forEach(printAuto);
-console.log('\n');
-//sortArr(yearComparator, automobiles).forEach(printAuto);
-sortArr(yearComparator, automobiles).forEach(printAuto2(true));
 
 console.log("*****");
 console.log("The cars sorted by year are:");
-sortArr(yearComparator, automobiles).map(printAuto2);
-console.log('\n');
-console.log("The cars sorted by make are:");
-sortArr(makeComparator, automobiles).foreach(printAuto);
-console.log('\n');
-console.log("The cars sorted by type are:");
-sortArr(typeComparator, automobiles).map(printAuto);
+sortArr(yearComparator, automobiles).forEach(logAuto(false));
+console.log("\nThe cars sorted by make are:");
+sortArr(makeComparator, automobiles).forEach(logAuto(false));
+console.log("\nThe cars sorted by type are:");
+sortArr(typeComparator, automobiles).forEach(logAuto(true));
 console.log("*****");
 
 
