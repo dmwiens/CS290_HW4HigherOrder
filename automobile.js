@@ -4,14 +4,15 @@ function Automobile( year, make, model, type ){
     this.model = model; //string (ex. Accord, Focus)
     this.type = type; //string (ex. Pickup, SUV)
 
-    // logMe function prints out the automobile
-    this.logMe = function(logType){
-        if (logType) {
-            console.log(this.year + " " + this.make + " " + this.model + " " + this.type);
-        }
-        else {
-            console.log(this.year + " " + this.make + " " + this.model);
-        }
+}
+
+// logMe function added to Automobile prototype
+Automobile.prototype.logMe = function(logType){
+    if (logType) {
+        console.log(this.year + " " + this.make + " " + this.model + " " + this.type);
+    }
+    else {
+        console.log(this.year + " " + this.make + " " + this.model);
     }
 }
 
@@ -28,7 +29,8 @@ var automobiles = [
 function sortArr( comparator, array ){
     /*your code here*/
 
-    return array.sort(comparator);
+    return array.sort(comparator).reverse();
+
 /*
 
     // initialize sorted array to values of array
@@ -154,15 +156,29 @@ function printAuto(auto){
 }
 
 
+function printAuto2(includeType){
+    return function(a){
+        a.logMe(includeType)
+    }
+}
+
+
+
+
+automobiles.forEach(printAuto);
+console.log('\n');
+//sortArr(yearComparator, automobiles).forEach(printAuto);
+sortArr(yearComparator, automobiles).forEach(printAuto2(true));
 
 console.log("*****");
 console.log("The cars sorted by year are:");
-sortArr(yearComparator, automobiles).map(printAuto);
+sortArr(yearComparator, automobiles).map(printAuto2);
 console.log('\n');
 console.log("The cars sorted by make are:");
-sortArr(makeComparator, automobiles).map(printAuto);
+sortArr(makeComparator, automobiles).foreach(printAuto);
 console.log('\n');
 console.log("The cars sorted by type are:");
 sortArr(typeComparator, automobiles).map(printAuto);
 console.log("*****");
+
 
