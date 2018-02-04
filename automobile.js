@@ -3,6 +3,16 @@ function Automobile( year, make, model, type ){
     this.make = make; //string (ex. Honda, Ford)
     this.model = model; //string (ex. Accord, Focus)
     this.type = type; //string (ex. Pickup, SUV)
+
+    // logMe function prints out the automobile
+    this.logMe = function(logType){
+        if (logType) {
+            console.log(this.year + " " + this.make + " " + this.model + " " + this.type);
+        }
+        else {
+            console.log(this.year + " " + this.make + " " + this.model);
+        }
+    }
 }
 
 var automobiles = [ 
@@ -19,9 +29,30 @@ function sortArr( comparator, array ){
     /*your code here*/
 
     return array.sort(comparator);
+/*
 
+    // initialize sorted array to values of array
+    var sortedArr = array;
 
+    // Bubble Sort implementation
+    for (var i = sortedArr.length; i > 0; i--) {
+    // for a five element array, i would be 5, 4, 3, 2, 1
+        for (var j = 0; j < i; j++) {
+        // if i = 3, j would be 0, 1, 2
+
+            if (comparator(sortedArr[j+1], sortedArr[j])){
+                // if next is "greater" than current, swap
+                var temp = sortedArr[j];
+                sortedArr[j] = sortedArr[j+1];
+                sortedArr[j+1] = temp;
+            }
+
+        }
+
+    }
     
+    return sortedArr;
+*/
 }
 
 /*A comparator takes two arguments and uses some algorithm to compare them. If the first argument is larger or greater than the 2nd it returns true, otherwise it returns false. Here is an example that works on integers*/
@@ -117,12 +148,21 @@ console.log(makeComparator(automobiles[4],automobiles[5])); // should return t
 console.log(makeComparator(automobiles[5],automobiles[0])); // should return f*/
 
 
-// test sorting
+// test printing
 function printAuto(auto){
     console.log(auto.year + " " + auto.make + " " + auto.model);
 }
 
 
-automobiles.map(printAuto);
-console.log('\n');
+
+console.log("*****");
+console.log("The cars sorted by year are:");
 sortArr(yearComparator, automobiles).map(printAuto);
+console.log('\n');
+console.log("The cars sorted by make are:");
+sortArr(makeComparator, automobiles).map(printAuto);
+console.log('\n');
+console.log("The cars sorted by type are:");
+sortArr(typeComparator, automobiles).map(printAuto);
+console.log("*****");
+
